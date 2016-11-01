@@ -1,0 +1,74 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/*Added styles for the webgrid*/
+.gTable {
+border-collapse: collapse;
+border: 1px solid #c0c0c0;
+width: 100%;
+}
+
+.gTable tr td {
+    padding: 5px;
+    border: 1px solid #c0c0c0;
+}
+
+.gTable tr:nth-child(2n+1) {
+    background-color: #eaeaea;
+}
+
+.gTable tr th {
+    background-color: #8fd9ff;
+}
+
+tfoot tr td {
+    background-color: #ffd800 !important;
+}
+
+.gTable tr:hover {
+    background-color: #fffddc;
+}
+
+.selectedRow {
+    background-color: #ff6a00 !important;
+}
+
+.editor label {
+  float: left;
+  width: 130px;   // just putting an example here - but give them a width to align better
+  text-align: right; // this right-aligns them with the input
+}
+
+.editor input[type=text] {
+  width: 255px; // just putting an example value in here to make your inputs uniform in length
+  margin: 0 0 0 10px; // just some breathing room from the labels
+}
+
+ .clearfix{
+    clear: both;
+    padding: 0;
+    margin: 0;
+    height: 5px;
+    display: block;}

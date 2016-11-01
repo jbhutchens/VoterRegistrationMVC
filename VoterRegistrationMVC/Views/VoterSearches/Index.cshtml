@@ -1,0 +1,109 @@
+﻿@model IEnumerable<VoterRegistrationMVC.Models.VoterSearch>
+
+@{
+    ViewBag.Title = "WebGrid";
+}
+
+<h2>Index</h2>
+
+@* Html.BeginForm is used to add a form in an Html document *@
+@* Pass the action name in the first parameter, controller name in the second parameter and specify the form request type as get *@
+
+@using (Html.BeginForm("Index", "VoterSearches", FormMethod.Get))
+{
+    //the following are search options
+    <b> Search Option: </b>
+    @Html.Label("First Name:")
+    @Html.TextBox("FirstName", null, new { @class = "form-control" })
+}
+
+<div id="DivGrid">
+    @{
+
+        WebGrid grid = new WebGrid(Model, rowsPerPage: 25, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" });
+
+       
+    }
+
+    @grid.GetHtml(columns: grid.Columns(
+                                        grid.Column("FirstName", header: "First Name"),
+                                        grid.Column("LastName", "Last Name"),
+                                        grid.Column("HouseNum", "House Number"),
+                                        grid.Column("StreetName", "Street Name")
+                                        )
+                 )
+</div>
+
+
+
+
+
+@*
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PetitionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PetitionDetailID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.County)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HouseNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StreetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressValue)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PetitionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PetitionDetailID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.County)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HouseNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreetName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressValue)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+    </table>
+*@

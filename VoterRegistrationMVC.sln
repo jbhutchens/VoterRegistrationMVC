@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoterRegistrationMVC", "VoterRegistrationMVC\VoterRegistrationMVC.csproj", "{838FB3D0-E072-4C46-9AB8-68C21F2B3E86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoterRegistrationMVC.Tests", "VoterRegistrationMVC.Tests\VoterRegistrationMVC.Tests.csproj", "{A6BAA042-9935-44C7-95F2-4A0457C645B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{838FB3D0-E072-4C46-9AB8-68C21F2B3E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{838FB3D0-E072-4C46-9AB8-68C21F2B3E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{838FB3D0-E072-4C46-9AB8-68C21F2B3E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{838FB3D0-E072-4C46-9AB8-68C21F2B3E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BAA042-9935-44C7-95F2-4A0457C645B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BAA042-9935-44C7-95F2-4A0457C645B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6BAA042-9935-44C7-95F2-4A0457C645B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6BAA042-9935-44C7-95F2-4A0457C645B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

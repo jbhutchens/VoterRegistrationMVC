@@ -1,0 +1,57 @@
+﻿@model IEnumerable<VoterRegistrationMVC.Models.Petition>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VoterFileID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PetitionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PetitionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PetitionCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PetitionDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoterFileID)
+        </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.PetitionID)
+        </th>
+        <td>
+            @Html.DisplayFor(modelItem => item.PetitionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PetitionCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PetitionDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PetitionID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PetitionID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PetitionID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,69 @@
+﻿@model VoterRegistrationMVC.Models.IVoterSearchesCriteriaView
+
+
+ 
+<div id="SearchBox" class="editor">
+    @using (Html.BeginForm(new { id = "searchCriteria" }))
+    {
+        // Here is were the magic is, if you use the @Html.*For(m=>)
+        // Methods, they will create names that match the model
+        // and you can back back to the same model on Get/Post
+
+        /*@Html.DropDownList("PetitionID", new List<SelectListItem>(), new { @class = "form-control" })
+        @Html.DropDownList("PetitionID", null, "", new { @class = "form-control", required = "required" })*/
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.VoterSearchCriteriaModel.Petitions, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.VoterSearchCriteriaModel.PetitionID, Model.VoterSearchCriteriaModel.Petitions, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.VoterSearchCriteriaModel.PetitionID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    @Html.Label("First Name:", null, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.VoterSearchCriteriaModel.FirstName, null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    @Html.Label("Last Name:", null, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.VoterSearchCriteriaModel.LastName, null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group"> 
+                    <div class="col-md-10">
+                        <input type="submit" value="Search" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group" style="white-space:nowrap">
+                    @Html.LabelFor(m => m.VoterSearchCriteriaModel.PetitionDetailValues, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="white-space:nowrap">
+                        @Html.DropDownListFor(m => m.VoterSearchCriteriaModel.PetitionDetailID, Model.VoterSearchCriteriaModel.PetitionDetailValues, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.VoterSearchCriteriaModel.PetitionDetailID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group" style="white-space:nowrap">
+                    @Html.Label("House Number:", null, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => Model.VoterSearchCriteriaModel.HouseNumber, null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+
+        
+         
+    }
+</div>

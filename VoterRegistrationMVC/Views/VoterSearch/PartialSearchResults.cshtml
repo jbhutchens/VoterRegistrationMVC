@@ -1,0 +1,28 @@
+﻿@model VoterRegistrationMVC.Models.IVoterSearchesResultsView
+
+
+
+
+<div id="DivGrid" class="gTable">
+    @{
+
+
+        WebGrid grid = new WebGrid(Model.VoterSearchResults, rowsPerPage: 25, canPage: false, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" }, selectionFieldName: "VoterID");
+
+
+    }
+
+    @grid.GetHtml(
+                    columns: grid.Columns(
+                                        grid.Column("VoterID", header: "Voter ID", format: (item) => Html.ActionLink("Add Voter", "AddVoter", "VoterSearch", new { VoterID = (String)item.VoterID, PetitionID = (int)item.PetitionID, PetitionDetailID = (int)item.PetitionDetailID }, null)),
+                                        grid.Column("FirstName", header: "First Name"),
+                                        grid.Column("LastName", "Last Name"),
+                                        grid.Column("HouseNum", "House Number"),
+                                        grid.Column("StreetName", "Street Name")
+                                        ),
+                          tableStyle: "gTable",
+                          selectedRowStyle: "selectedRow"
+                 )
+</div>
+
+

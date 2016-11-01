@@ -1,0 +1,82 @@
+﻿@model VoterRegistrationMVC.Models.VoterSearch
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VoterSearch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PetitionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PetitionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PetitionDetailID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PetitionDetailID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.County)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.County)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HouseNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HouseNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StreetName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StreetName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressValue)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

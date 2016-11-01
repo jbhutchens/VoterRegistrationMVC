@@ -1,0 +1,50 @@
+﻿@model VoterRegistrationMVC.Models.Petition
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Petition</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VoterFileID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VoterFileID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PetitionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PetitionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PetitionCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PetitionCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PetitionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PetitionDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PetitionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,42 @@
+﻿@model VoterRegistrationMVC.Models.VoterMergeFileDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VoterMergeFileDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateMerged)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateMerged)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JeffcoDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JeffcoDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdamsCountyDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdamsCountyDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VoterFileID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

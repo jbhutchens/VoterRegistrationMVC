@@ -1,0 +1,55 @@
+﻿@model IEnumerable<VoterRegistrationMVC.Models.VoterSearch>
+
+@{
+    ViewBag.Title = "WebGrid";
+}
+
+@* Html.BeginForm is used to add a form in an Html document *@
+@* Pass the action name in the first parameter, controller name in the second parameter and specify the form request type as get *@
+<h1>Find Registered Voters</h1>
+
+<div id ="SearchBox"class="editor">
+    @using (Html.BeginForm("WebGrid", "VoterSearches"))
+    {
+        @Html.Label("Select Petition:")
+        /*@Html.DropDownList("PetitionID", new List<SelectListItem>(), new { @class = "form-control" })*/
+         @Html.DropDownList("PetitionID", null, "", new { @class = "form-control", required = "required" })
+
+        //the following are search options
+        @Html.Label("First Name:")
+        @Html.TextBox("FirstName", null, new { @class = "form-control" })
+
+        @Html.Label("Last Name:")
+        @Html.TextBox("LastName", null, new { @class = "form-control" })
+
+        @Html.Label("House Number:")
+        @Html.TextBox("HouseNumber", null, new { @class = "form-control" })
+
+        <input type="submit" value="Search" /> 
+    }
+</div>
+
+<br />
+
+
+
+<div id="DivGrid" class="gTable">
+    @{
+
+        WebGrid grid = new WebGrid(Model, rowsPerPage: 25, canPage: false, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" }, selectionFieldName: "VoterID" );
+
+
+    }
+
+    @grid.GetHtml(columns: grid.Columns(
+                                        grid.Column("VoterID", header: "Voter ID", format: (item) => item.GetSelectLink(item.VoterID.ToString())),
+                                        grid.Column("FirstName", header: "First Name"),
+                                        grid.Column("LastName", "Last Name"),
+                                        grid.Column("HouseNum", "House Number"),
+                                        grid.Column("StreetName", "Street Name")
+                                        ),
+                          tableStyle: "gTable",
+                          selectedRowStyle: "selectedRow"
+                 )
+</div>
+ 
