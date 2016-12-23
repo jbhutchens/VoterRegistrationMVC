@@ -3,21 +3,14 @@
 
  
 <div id="SearchBox" class="editor">
-    @using (Html.BeginForm(new { id = "searchCriteria" }))
-    {
-        // Here is were the magic is, if you use the @Html.*For(m=>)
-        // Methods, they will create names that match the model
-        // and you can back back to the same model on Get/Post
 
-        /*@Html.DropDownList("PetitionID", new List<SelectListItem>(), new { @class = "form-control" })
-        @Html.DropDownList("PetitionID", null, "", new { @class = "form-control", required = "required" })*/
-
+    <form id="frmCriteria" action="~/VoterSearch/Search" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(m => m.VoterSearchCriteriaModel.Petitions, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.VoterSearchCriteriaModel.PetitionID, Model.VoterSearchCriteriaModel.Petitions, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DropDownListFor(m => m.VoterSearchCriteriaModel.PetitionID, Model.VoterSearchCriteriaModel.Petitions, new { htmlAttributes = new { @id = "PetitionDDL", @class = "form-control" } })
                         @Html.ValidationMessageFor(m => m.VoterSearchCriteriaModel.PetitionID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -36,7 +29,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="form-group"> 
+                <div class="form-group">
                     <div class="col-md-10">
                         <input type="submit" value="Search" />
                     </div>
@@ -61,9 +54,15 @@
                 </div>
             </div>
         </div>
-  
 
+
+    </form>
+
+     
         
-         
-    }
+
+
 </div>
+
+
+

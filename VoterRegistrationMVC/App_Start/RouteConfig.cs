@@ -47,7 +47,13 @@ namespace VoterRegistrationMVC
                 new { controller = "VoterSearch", action = "AddVoter", VoterID = UrlParameter.Optional, PetitionID = UrlParameter.Optional, PetitionDetailID = UrlParameter.Optional } // Parameter defaults
               );
 
-            
+
+            routes.MapRoute(
+                "RemoveVoter", // Route name
+                "{controller}/{action}/{VoterID}/{PetitionID}/{PetitionDetailID}", // URL with 
+                new { controller = "PetitionSignatureSearch", action = "RemoveVoter", VoterID = UrlParameter.Optional, PetitionID = UrlParameter.Optional, PetitionDetailID = UrlParameter.Optional } // Parameter defaults
+              );
+
 
 
 

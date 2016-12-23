@@ -219,6 +219,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PetitionDropDownReSubmit.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -279,10 +280,12 @@
     <Content Include="Views\PetitionDetails\Details.cshtml" />
     <Content Include="Views\PetitionDetails\Edit.cshtml" />
     <Content Include="Views\PetitionDetails\Index.cshtml" />
+    <Content Include="Views\PetitionSignatureSearch\Search.cshtml" />
+    <Content Include="Views\PetitionSignatureSearch\PetitionSignatureSearchCriteria.cshtml" />
+    <Content Include="Views\PetitionSignatureSearch\PeitionSignatureSearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PetitionSignatureSearch\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -25,13 +25,19 @@ namespace VoterRegistrationMVC.Controllers
         
         public ActionResult Search(int PetitionID = 0, int PetitionDetailID = 0)
         {
+             
+
             VoterSearchesViewModel viewModel = new VoterSearchesViewModel();
             // make sure we don't get a null reference exceptions
             viewModel.VoterSearchCriteriaModel = new VoterSearchCriteriaModel();
             viewModel.VoterSearchResults = new List<VoterSearch>();
-             
+            if (PetitionID != 0)
+            {
+                viewModel.VoterSearchCriteriaModel.PetitionID = PetitionID;
+            }
             PopulatePetitionDropDownList(viewModel.VoterSearchCriteriaModel, PetitionID);
             PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, PetitionDetailID);
+            
             return this.View(viewModel);
         }
 
@@ -47,6 +53,25 @@ namespace VoterRegistrationMVC.Controllers
             PopulatePetitionDropDownList(viewModel.VoterSearchCriteriaModel, PetitionID);
             PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, PetitionDetailID);
             return View("~/Views/VoterSearch/Search.cshtml");
+        }
+
+
+        [HttpPost]
+        public ActionResult PetitionChange(int PetitionID = 0)
+        {
+            VoterSearchesViewModel viewModel = new VoterSearchesViewModel();
+            // make sure we don't get a null reference exceptions
+            viewModel.VoterSearchCriteriaModel = new VoterSearchCriteriaModel();
+            if (PetitionID != 0)
+            {
+                viewModel.VoterSearchCriteriaModel.PetitionID = PetitionID;
+            }
+            
+            PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, 0);
+
+            //return RedirectToAction("Search", new { PetitionID = PetitionID, PetitionDetailID = 0 });
+            return Json(viewModel.VoterSearchCriteriaModel.PetitionDetailValues);
+
         }
 
 
@@ -101,7 +126,7 @@ namespace VoterRegistrationMVC.Controllers
                 if (selected != null)
                 {
                     criteria.Petitions = new SelectList(criteria.Petitions, "value", "text", selected.Value);
-                }
+                } 
             }
             //SelectList myList = GetMySelectList();
             //SelectListItem selected = myList.FirstOrDefault(x => x.Text.ToUpper().Contains("UNITED STATES"));

@@ -1,0 +1,29 @@
+﻿@model VoterRegistrationMVC.Models.IPetitionSignatureSearchResultsView
+
+
+
+
+<div id="DivGrid" class="gTable">
+    @{
+
+
+        WebGrid grid = new WebGrid(Model.PetitionSignatureSearchResults, rowsPerPage: 25, canPage: false, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue","Remove" }, selectionFieldName: "Remove");
+
+
+    }
+
+    @grid.GetHtml(
+                    columns: grid.Columns(
+                                        grid.Column("VoterID", header: "Voter ID"), //, format: (item) => Html.ActionLink("Add Voter", "AddVoter", "VoterSearch", new { VoterID = (String)item.VoterID, PetitionID = (int)item.PetitionID, PetitionDetailID = (int)item.PetitionDetailID }, null)),
+                                        grid.Column("FirstName", header: "First Name"),
+                                        grid.Column("LastName", header: "Last Name"),
+                                        grid.Column("HouseNum", header: "House Number"),
+                                        grid.Column("StreetName", header: "Street Name"),
+                                        grid.Column("Remove", header: "Remove", format: (item) => Html.ActionLink("Remove Voter", "RemoveVoter", "PetitionSignatureSearch", new { VoterID = (String)item.VoterID, PetitionID = (int)item.PetitionID, PetitionDetailID = (int)item.PetitionDetailID }, null))
+                                        ),
+                          tableStyle: "gTable",
+                          selectedRowStyle: "selectedRow"
+                 )
+</div>
+
+
