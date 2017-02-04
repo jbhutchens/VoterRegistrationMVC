@@ -25,7 +25,7 @@ namespace VoterRegistrationMVC.Models
         public string HouseNum { get; set; }
         public string StreetName { get; set; }
         public string AddressValue { get; set; }
-
+        public int totalRows { get; set; }
         /*
         var functionId = yourIdParameter;
         var result =  db.Database.SqlQuery<GetFunctionByID>("GetFunctionByID @FunctionId", new SqlParameter("@FunctionId", functionId)).ToList());

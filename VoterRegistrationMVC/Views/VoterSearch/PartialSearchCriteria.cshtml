@@ -2,6 +2,8 @@
 
 
  
+
+
 <div id="SearchBox" class="editor">
 
     <form id="frmCriteria" action="~/VoterSearch/Search" method="post">
@@ -14,6 +16,7 @@
                         @Html.ValidationMessageFor(m => m.VoterSearchCriteriaModel.PetitionID, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @Html.HiddenFor(x => x.VoterSearchCriteriaModel.Page, new { id = "page" })
                 <div class="clearfix"></div>
                 <div class="form-group">
                     @Html.Label("First Name:", null, htmlAttributes: new { @class = "control-label col-md-2" })

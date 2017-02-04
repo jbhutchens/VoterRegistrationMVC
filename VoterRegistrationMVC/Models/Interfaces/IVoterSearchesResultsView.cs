@@ -8,7 +8,7 @@ namespace VoterRegistrationMVC.Models
 {
     public interface IVoterSearchesResultsView
     {
-        IEnumerable<VoterSearch> VoterSearchResults { get; }
+        IEnumerable<VoterSearch> VoterSearchResults { get; } 
     }
 }
 

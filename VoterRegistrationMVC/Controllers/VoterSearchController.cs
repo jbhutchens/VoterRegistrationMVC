@@ -13,7 +13,7 @@ namespace VoterRegistrationMVC.Controllers
     public class VoterSearchController : Controller
     {
         private VoterRegistrationContext db = new VoterRegistrationContext();
-   
+        
 
         // GET: VoterSearch
         public ActionResult Index()
@@ -25,7 +25,11 @@ namespace VoterRegistrationMVC.Controllers
         
         public ActionResult Search(int PetitionID = 0, int PetitionDetailID = 0)
         {
-             
+
+            if (ViewBag.TotalRows == null)
+            {
+                ViewBag.TotalRows = 0;
+            }
 
             VoterSearchesViewModel viewModel = new VoterSearchesViewModel();
             // make sure we don't get a null reference exceptions
@@ -75,12 +79,18 @@ namespace VoterRegistrationMVC.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost] 
         public ActionResult Search(VoterSearchesViewModel model)
         {
-            model.VoterSearchResults = GetVoterResults(model.VoterSearchCriteriaModel);
+            int page = 0;
+            page = model.VoterSearchCriteriaModel.Page ?? 0;
+
+         
+
+            model.VoterSearchResults = GetVoterResults(model.VoterSearchCriteriaModel, page);
             PopulatePetitionDropDownList(model.VoterSearchCriteriaModel, 0);
             PopulatePetitionDetailDropDownList(model.VoterSearchCriteriaModel, 0);
+            
 
             return this.View(model);
         }
@@ -167,11 +177,14 @@ namespace VoterRegistrationMVC.Controllers
         }
 
 
-        private IEnumerable<VoterSearch> GetVoterResults(VoterSearchCriteriaModel criteria)
+        private IEnumerable<VoterSearch> GetVoterResults(VoterSearchCriteriaModel criteria, int page)
         {
 
             int PetitionID = criteria.PetitionID;
             int PeitionDetailID = criteria.PetitionDetailID;
+            int startNum = (page * 25)+1;
+            int endNum = startNum + (25-1);
+            criteria.Page = 1;
 
             String FirstName = String.Empty;
             if (criteria.FirstName != null)
@@ -198,17 +211,24 @@ namespace VoterRegistrationMVC.Controllers
             }
              
 
-            string query = "EXEC dbo.sp_VoterSearch @PetitionID, @PetitionDetailID, @FirstName, @LastName, @HouseNum";
+            string query = "EXEC dbo.sp_VoterSearch @PetitionID, @PetitionDetailID, @FirstName, @LastName, @HouseNum, @startNum, @endNum";
             SqlParameter petitionIDParam = new SqlParameter("PetitionID", PetitionID);
             SqlParameter PetitionDetailIDParam = new SqlParameter("PetitionDetailID", PeitionDetailID);
             SqlParameter FirstNameParam = new SqlParameter("FirstName", FirstName);
             SqlParameter LastNameParam = new SqlParameter("LastName", LastName);
             SqlParameter HouseNumParam = new SqlParameter("HouseNum", HouseNum);
+            SqlParameter startNumParam = new SqlParameter("startNum", startNum);
+            SqlParameter endNumParam = new SqlParameter("endNum", endNum);
 
 
-            IEnumerable<VoterSearch> data = db.Database.SqlQuery<VoterSearch>(query, petitionIDParam, PetitionDetailIDParam, FirstNameParam, LastNameParam, HouseNumParam).ToList();
-            
+            IEnumerable<VoterSearch> data = db.Database.SqlQuery<VoterSearch>(query, petitionIDParam, PetitionDetailIDParam, FirstNameParam, LastNameParam, HouseNumParam, startNumParam, endNumParam).ToList();
 
+            ViewBag.TotalRows = data.Select(x => x.totalRows).First();
+
+            if (ViewBag.TotalRows == null)
+            {
+                ViewBag.TotalRows = 0;
+            }
 
             return data;
 

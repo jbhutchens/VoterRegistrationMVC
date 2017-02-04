@@ -7,8 +7,9 @@
     @{
 
 
-        WebGrid grid = new WebGrid(Model.VoterSearchResults, rowsPerPage: 25, canPage: false, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" }, selectionFieldName: "VoterID");
-
+        WebGrid grid = new WebGrid(canPage: true,  rowsPerPage: 25, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" }, selectionFieldName: "VoterID");
+        //grid.Pager(WebGridPagerModes.Numeric); 
+        grid.Bind(source: Model.VoterSearchResults, autoSortAndPage: false, rowCount: ViewBag.TotalRows);
 
     }
 
@@ -21,7 +22,10 @@
                                         grid.Column("StreetName", "Street Name")
                                         ),
                           tableStyle: "gTable",
-                          selectedRowStyle: "selectedRow"
+                          selectedRowStyle: "selectedRow",
+                          footerStyle: "grid-footer",
+                          mode : WebGridPagerModes.Numeric,
+                          htmlAttributes: new { id = "tblSearchResults" } 
                  )
 </div>
 
