@@ -4,10 +4,11 @@
 
 
 <div id="DivGrid" class="gTable">
+    
     @{
 
 
-        WebGrid grid = new WebGrid(canPage: true,  rowsPerPage: 25, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" }, selectionFieldName: "VoterID");
+        WebGrid grid = new WebGrid(canPage: false,  rowsPerPage: 25, columnNames: new[] { "VoterID", "FirstName", "LastName", "HouseNum", "StreetName", "AddressValue" }, selectionFieldName: "VoterID");
         //grid.Pager(WebGridPagerModes.Numeric); 
         grid.Bind(source: Model.VoterSearchResults, autoSortAndPage: false, rowCount: ViewBag.TotalRows);
 
@@ -22,11 +23,68 @@
                                         grid.Column("StreetName", "Street Name")
                                         ),
                           tableStyle: "gTable",
-                          selectedRowStyle: "selectedRow",
-                          footerStyle: "grid-footer",
-                          mode : WebGridPagerModes.Numeric,
+                          selectedRowStyle: "selectedRow", 
+                         // footerStyle: "webgrid-footer",
+                        //  mode : WebGridPagerModes.Numeric,                          
                           htmlAttributes: new { id = "tblSearchResults" } 
                  )
+
+    <div class="container-fluid pagination-lg">
+        <ul id="PagingFooter" class="pagination pagination-lg">
+            @{
+                var totalPages = (int)Math.Ceiling((double)ViewBag.TotalRows / 25) - 1;
+                var PageLink = "PageLink";
+
+                for (var i = 1; i <= totalPages; i++)
+                {
+                    PageLink = "PageLink" + i;
+
+                    if (ViewBag.CurrentPage == i)
+                    {
+                        <li class="active">
+                            <a id="@PageLink" href="/VoterSearch/Search?page=@i">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a id="@PageLink" href="/VoterSearch/Search?page=@i">@i</a>
+                        </li>
+                    }
+
+
+                  }
+
+
+
+
+            }
+        </ul>
+    </div>
 </div>
 
+<script>
+ 
 
+    $('#PagingFooter a').click(function () {
+        // when the user clicks on any of the pager links
+        // try to extract the page number from the link and
+        // set the value of the hidden field 
+        var page = this.href.match(/page=([0-9])+/)[1];
+        
+        $('#page').val(page);
+      
+        
+        // submit the form so that the POST action is invoked
+        // passing along the search criteria (Name and Year) along
+        // with the page hidden field value to the Index action
+        $('form').submit();
+
+        // cancel the default action of the link which is to simply redirect
+        // to the Index action using a GET verb.
+        return false;
+            }
+         )
+
+  
+</script>

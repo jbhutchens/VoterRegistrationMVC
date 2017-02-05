@@ -6,7 +6,7 @@
         $(document).on('change', '#VoterSearchCriteriaModel_PetitionID', function () {
              
             var value = $('#VoterSearchCriteriaModel_PetitionID').val();
-            alert(value);
+            //alert(value);
             var url = "/VoterSearch/PetitionChange/";
             
             //this fills our detail petition id drop down
@@ -36,31 +36,45 @@
         })
 
 
-        $(function () {
-            $('tfoot a').click(function () {
-                // when the user clicks on any of the pager links
-                // try to extract the page number from the link and
-                // set the value of the hidden field
-                var page = this.href.match(/page=([0-9])+/)[1];
-                $('#page').val(page);
+        
+  
 
-                //this.getAttribute("href")
-               // alert(ColSpanVal);
-                // submit the form so that the POST action is invoked
-                // passing along the search criteria (Name and Year) along
-                // with the page hidden field value to the Index action
-                //$('frmCriteria').submit();
-                document.getElementById("frmCriteria").submit();
+    //$('#PagingFooter a').click(function ()
+    //            {
+    //                // when the user clicks on any of the pager links
+    //                // try to extract the page number from the link and
+    //                // set the value of the hidden field
+    //                var count = 1;
+    //                var page = this.href.match(/page=([0-9])+/)[1];
+    //                $('#page').val(page);
+    //                //this.getAttribute("href")
+    //                alert(pages);
+    //                // submit the form so that the POST action is invoked
+    //                // passing along the search criteria (Name and Year) along
+    //                // with the page hidden field value to the Index action
+    //                //$('frmCriteria').submit();
+    //                document.getElementById("frmCriteria").submit();
 
-                // cancel the default action of the link which is to simply redirect
-                // to the Index action using a GET verb.
-                return false;
-            });
-        });
+    //                this.replaceWith($("a#link").text());
+    //                // cancel the default action of the link which is to simply redirect
+    //                // to the Index action using a GET verb.
+    //                return false;
+    //            }
+    //        )
+
+        //$(function () {
+        //    $('tfoot a').each(function() {   
+        //        //$(this).attr("href", "/Search?page="+count);
+        //        //$(this).attr("val", count);
+        //        count++;
+        //        alert(count);
+        //    })
+        //});
     </script>
 }
 
 @Html.Partial("PartialSearchCriteria", Model)
+
 
 <div id="searchResults">
     @Html.Partial("PartialSearchResults", Model)

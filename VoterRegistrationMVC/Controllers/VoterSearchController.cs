@@ -25,24 +25,33 @@ namespace VoterRegistrationMVC.Controllers
         
         public ActionResult Search(int PetitionID = 0, int PetitionDetailID = 0)
         {
-
+             VoterSearchesViewModel viewModel = new VoterSearchesViewModel();
+                // make sure we don't get a null reference exceptions
+                viewModel.VoterSearchCriteriaModel = new VoterSearchCriteriaModel();
+                viewModel.VoterSearchResults = new List<VoterSearch>();
+                if (PetitionID != 0)
+                {
+                    viewModel.VoterSearchCriteriaModel.PetitionID = PetitionID;
+                }
+                PopulatePetitionDropDownList(viewModel.VoterSearchCriteriaModel, PetitionID);
+                PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, PetitionDetailID);
+            //Session.Remove("FirstName");
+            //Session.Add("FirstName", viewModel.VoterSearchCriteriaModel.FirstName);
+            //Session.Remove("LastName");
+            //Session.Add("LastName", viewModel.VoterSearchCriteriaModel.LastName);
+            //Session.Remove("HouseNum");
+            //Session.Add("HouseNum", viewModel.VoterSearchCriteriaModel.HouseNumber);
+            ViewBag.TotalRows = viewModel.VoterSearchResults.Select(q => q.totalRows).FirstOrDefault();
             if (ViewBag.TotalRows == null)
-            {
                 ViewBag.TotalRows = 0;
-            }
 
-            VoterSearchesViewModel viewModel = new VoterSearchesViewModel();
-            // make sure we don't get a null reference exceptions
-            viewModel.VoterSearchCriteriaModel = new VoterSearchCriteriaModel();
-            viewModel.VoterSearchResults = new List<VoterSearch>();
-            if (PetitionID != 0)
-            {
-                viewModel.VoterSearchCriteriaModel.PetitionID = PetitionID;
-            }
-            PopulatePetitionDropDownList(viewModel.VoterSearchCriteriaModel, PetitionID);
-            PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, PetitionDetailID);
-            
+            ViewBag.CurrentPage = 1;
+            viewModel.VoterSearchCriteriaModel.Page = 1;
+
             return this.View(viewModel);
+
+            
+                
         }
 
         //comes here after entering found voter
@@ -79,20 +88,26 @@ namespace VoterRegistrationMVC.Controllers
         }
 
 
-        [HttpPost] 
+        [HttpPost]
         public ActionResult Search(VoterSearchesViewModel model)
         {
             int page = 0;
             page = model.VoterSearchCriteriaModel.Page ?? 0;
 
-         
+
 
             model.VoterSearchResults = GetVoterResults(model.VoterSearchCriteriaModel, page);
             PopulatePetitionDropDownList(model.VoterSearchCriteriaModel, 0);
             PopulatePetitionDetailDropDownList(model.VoterSearchCriteriaModel, 0);
-            
+             
 
-            return this.View(model);
+            ViewBag.TotalRows = model.VoterSearchResults.Select(q => q.totalRows).FirstOrDefault();
+            if (ViewBag.TotalRows == null)
+                ViewBag.TotalRows = 0;
+
+            ViewBag.CurrentPage = page;
+
+            return View(model);
         }
 
         // You could use this for Ajax
@@ -223,7 +238,11 @@ namespace VoterRegistrationMVC.Controllers
 
             IEnumerable<VoterSearch> data = db.Database.SqlQuery<VoterSearch>(query, petitionIDParam, PetitionDetailIDParam, FirstNameParam, LastNameParam, HouseNumParam, startNumParam, endNumParam).ToList();
 
-            ViewBag.TotalRows = data.Select(x => x.totalRows).First();
+            if (data.Count() != 0)
+            { 
+                ViewBag.TotalRows = data.Select(x => x.totalRows).First();
+            }
+
 
             if (ViewBag.TotalRows == null)
             {
