@@ -16,6 +16,7 @@ namespace VoterRegistrationMVC.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string HouseNumber { get; set; }
+        public int? Page { get; set; }
 
         [Display(Name = "Petitions:")]
         public IEnumerable<SelectListItem> Petitions { get; set; }

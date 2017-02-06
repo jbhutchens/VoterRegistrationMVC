@@ -33,6 +33,8 @@ namespace VoterRegistrationMVC.Models
 
         public string StreetName { get; set; }
 
-        public string AddressValue { get; set; }
+        public string AddressValue { get; set; } 
+
+        public int totalRows { get; set; }
     }
 }

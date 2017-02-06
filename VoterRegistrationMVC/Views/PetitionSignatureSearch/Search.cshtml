@@ -1,5 +1,48 @@
 ﻿@model VoterRegistrationMVC.Models.PetitionSignaturesSearchViewModel
 
+
+@section scripts
+{
+    <script language="javascript" type="text/javascript">
+        $(document).on('change', '#PetitionSignatureSearchCriteriaModel_PetitionID', function () {
+
+            var value = $('#PetitionSignatureSearchCriteriaModel_PetitionID').val();
+            //alert(value);
+            var url = "/PetitionSignatureSearch/PetitionChange/";
+
+            //this fills our detail petition id drop down
+            $.ajax({
+                url: url,
+                data: { PetitionID: value },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup;
+                    if (data.length == 0)
+                    {
+                        markup = "<option value='0'>Select Detail Petition ID</option>";
+                    }
+
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#PetitionSignatureSearchCriteriaModel_PetitionDetailID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+
+
+            })
+        })
+
+
+    </script>
+}
+
+
+
+
 @Html.Partial("PetitionSignatureSearchCriteria", Model)
 
 <div id="searchResults">

@@ -28,22 +28,48 @@ namespace VoterRegistrationMVC.Controllers
             viewModel.PetitionSignatureSearchCriteriaModel = new PetitionSignatureSearchCriteriaModel();
             viewModel.PetitionSignatureSearchResults = new List<PetitionSignatureSearch>();
 
+            //retain the petition ID if we know it being passed thru a param, forget why now, on add I think
+            if (PetitionID != 0)
+            {
+                viewModel.PetitionSignatureSearchCriteriaModel.PetitionID = PetitionID;
+            }
             PopulatePetitionDropDownList(viewModel.PetitionSignatureSearchCriteriaModel, PetitionID);
             PopulatePetitionDetailDropDownList(viewModel.PetitionSignatureSearchCriteriaModel, PetitionDetailID);
+
+            //Set Total Rows so pagination works
+            ViewBag.TotalRows = viewModel.PetitionSignatureSearchResults.Select(q => q.totalRows).FirstOrDefault();
+            if (ViewBag.TotalRows == null)
+                ViewBag.TotalRows = 0;
+
+            //tells us which little page number to start on and highlight, annoying redundancy but another day, another time.
+            ViewBag.CurrentPage = 1;
+            viewModel.PetitionSignatureSearchCriteriaModel.Page = 1;
+
             return this.View(viewModel);
         }
-         
+
         [HttpPost]
         public ActionResult Search(PetitionSignaturesSearchViewModel model)
         {
-            model.PetitionSignatureSearchResults = GetVoterResults(model.PetitionSignatureSearchCriteriaModel);
+            int page = 0;
+            page = model.PetitionSignatureSearchCriteriaModel.Page ?? 0;
+
+
+
+            model.PetitionSignatureSearchResults = GetVoterResults(model.PetitionSignatureSearchCriteriaModel, page);
             PopulatePetitionDropDownList(model.PetitionSignatureSearchCriteriaModel, 0);
             PopulatePetitionDetailDropDownList(model.PetitionSignatureSearchCriteriaModel, 0);
 
-            return this.View(model);
+
+            ViewBag.TotalRows = model.PetitionSignatureSearchResults.Select(q => q.totalRows).FirstOrDefault();
+            if (ViewBag.TotalRows == null)
+                ViewBag.TotalRows = 0;
+
+            ViewBag.CurrentPage = page;
+
+            return View(model);
         }
 
- 
 
         [Route("RemoveVoter")]
         public ActionResult RemoveVoter(string VoterID, int PetitionID, int PetitionDetailID)
@@ -93,6 +119,25 @@ namespace VoterRegistrationMVC.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult PetitionChange(int PetitionID = 0)
+        {
+            PetitionSignaturesSearchViewModel viewModel = new PetitionSignaturesSearchViewModel();
+            // make sure we don't get a null reference exceptions
+            viewModel.PetitionSignatureSearchCriteriaModel = new PetitionSignatureSearchCriteriaModel();
+            if (PetitionID != 0)
+            {
+                viewModel.PetitionSignatureSearchCriteriaModel.PetitionID = PetitionID;
+            }
+
+            PopulatePetitionDetailDropDownList(viewModel.PetitionSignatureSearchCriteriaModel, 0);
+
+            return Json(viewModel.PetitionSignatureSearchCriteriaModel.PetitionDetailValues);
+
+        }
+
+
+
         private void PopulatePetitionDetailDropDownList(PetitionSignatureSearchCriteriaModel criteria, int SelectedValue)
         {
             int _PetitionID = criteria.PetitionID;
@@ -123,11 +168,14 @@ namespace VoterRegistrationMVC.Controllers
         }
 
 
-        private IEnumerable<PetitionSignatureSearch> GetVoterResults(PetitionSignatureSearchCriteriaModel criteria)
+        private IEnumerable<PetitionSignatureSearch> GetVoterResults(PetitionSignatureSearchCriteriaModel criteria, int page)
         {
 
             int PetitionID = criteria.PetitionID;
             int PeitionDetailID = criteria.PetitionDetailID;
+            int startNum = (page * 25) + 1;
+            int endNum = startNum + (25 - 1);
+            criteria.Page = 1;
 
             String FirstName = String.Empty;
             if (criteria.FirstName != null)
@@ -160,11 +208,24 @@ namespace VoterRegistrationMVC.Controllers
             SqlParameter FirstNameParam = new SqlParameter("FirstName", FirstName);
             SqlParameter LastNameParam = new SqlParameter("LastName", LastName);
             SqlParameter HouseNumParam = new SqlParameter("HouseNum", HouseNum);
+            SqlParameter startNumParam = new SqlParameter("startNum", startNum);
+            SqlParameter endNumParam = new SqlParameter("endNum", endNum);
 
 
-            IEnumerable<PetitionSignatureSearch> data = db.Database.SqlQuery<PetitionSignatureSearch>(query, petitionIDParam, PetitionDetailIDParam, FirstNameParam, LastNameParam, HouseNumParam).ToList();
+            IEnumerable<PetitionSignatureSearch> data = db.Database.SqlQuery<PetitionSignatureSearch>(query, petitionIDParam, PetitionDetailIDParam, FirstNameParam, LastNameParam, HouseNumParam, startNumParam, endNumParam).ToList();
+
+            //we dont get all the rows, we just get what we need and let the query tell us how many total if we were to get all of them
+            //less data less overhead
+            if (data.Count() != 0)
+            {
+                ViewBag.TotalRows = data.Select(x => x.totalRows).First();
+            }
 
 
+            if (ViewBag.TotalRows == null)
+            {
+                ViewBag.TotalRows = 0;
+            }
 
             return data;
 

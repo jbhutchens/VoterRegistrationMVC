@@ -38,7 +38,7 @@
                 <div class="clearfix"></div>
                 <div class="form-group"> 
                     <div class="col-md-10">
-                        <input type="submit" value="Search" />
+                        <input type="submit" value="Search" onclick="DoSubmit()" />
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -63,7 +63,17 @@
         </div>
   
 
-        
-         
+        @Html.HiddenFor(x => x.PetitionSignatureSearchCriteriaModel.Page, new { id = "page" })
+
     }
 </div>
+
+
+<script>
+    function DoSubmit() {
+        //If we reclick the search button it makes sense to send us back to page 1
+        document.getElementById("page").value = "1";
+
+        document.getElementById("frmCriteria").submit();
+    }
+</script>

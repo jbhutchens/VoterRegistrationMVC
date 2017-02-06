@@ -22,29 +22,28 @@ namespace VoterRegistrationMVC.Controllers
         }
 
 
-        
+        //Get action for main search, intro to the whole show!
         public ActionResult Search(int PetitionID = 0, int PetitionDetailID = 0)
         {
              VoterSearchesViewModel viewModel = new VoterSearchesViewModel();
                 // make sure we don't get a null reference exceptions
                 viewModel.VoterSearchCriteriaModel = new VoterSearchCriteriaModel();
                 viewModel.VoterSearchResults = new List<VoterSearch>();
+                
+                //retain the petition ID if we know it being passed thru a param, forget why now, on add I think
                 if (PetitionID != 0)
                 {
                     viewModel.VoterSearchCriteriaModel.PetitionID = PetitionID;
                 }
                 PopulatePetitionDropDownList(viewModel.VoterSearchCriteriaModel, PetitionID);
                 PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, PetitionDetailID);
-            //Session.Remove("FirstName");
-            //Session.Add("FirstName", viewModel.VoterSearchCriteriaModel.FirstName);
-            //Session.Remove("LastName");
-            //Session.Add("LastName", viewModel.VoterSearchCriteriaModel.LastName);
-            //Session.Remove("HouseNum");
-            //Session.Add("HouseNum", viewModel.VoterSearchCriteriaModel.HouseNumber);
+
+            //Set Total Rows so pagination works
             ViewBag.TotalRows = viewModel.VoterSearchResults.Select(q => q.totalRows).FirstOrDefault();
             if (ViewBag.TotalRows == null)
                 ViewBag.TotalRows = 0;
 
+            //tells us which little page number to start on and highlight, annoying redundancy but another day, another time.
             ViewBag.CurrentPage = 1;
             viewModel.VoterSearchCriteriaModel.Page = 1;
 
@@ -81,13 +80,13 @@ namespace VoterRegistrationMVC.Controllers
             }
             
             PopulatePetitionDetailDropDownList(viewModel.VoterSearchCriteriaModel, 0);
-
-            //return RedirectToAction("Search", new { PetitionID = PetitionID, PetitionDetailID = 0 });
+            
             return Json(viewModel.VoterSearchCriteriaModel.PetitionDetailValues);
 
         }
 
 
+        //After we submit the form, or if we click on a pagination button -- javascript switches it from get to post.
         [HttpPost]
         public ActionResult Search(VoterSearchesViewModel model)
         {
@@ -110,13 +109,6 @@ namespace VoterRegistrationMVC.Controllers
             return View(model);
         }
 
-        // You could use this for Ajax
-        //public ActionResult Results(VoterSearchesViewModel model)
-        //{
-        //    model.VoterSearchResults = this.GetVoterResults(model.VoterSearchModel);
-
-        //    return this.Partial("Partial-SearchResults", model)
-        //}
 
         [Route("AddVoter")]
         public ActionResult AddVoter(string VoterID, int PetitionID, int PetitionDetailID)
@@ -152,13 +144,7 @@ namespace VoterRegistrationMVC.Controllers
                 {
                     criteria.Petitions = new SelectList(criteria.Petitions, "value", "text", selected.Value);
                 } 
-            }
-            //SelectList myList = GetMySelectList();
-            //SelectListItem selected = myList.FirstOrDefault(x => x.Text.ToUpper().Contains("UNITED STATES"));
-            //if (selected != null)
-            //{
-            //    myList = new SelectList(myList, "value", "text", selected.Value);
-            //}
+            } 
 
         }
 
@@ -238,6 +224,8 @@ namespace VoterRegistrationMVC.Controllers
 
             IEnumerable<VoterSearch> data = db.Database.SqlQuery<VoterSearch>(query, petitionIDParam, PetitionDetailIDParam, FirstNameParam, LastNameParam, HouseNumParam, startNumParam, endNumParam).ToList();
 
+            //we dont get all the rows, we just get what we need and let the query tell us how many total if we were to get all of them
+            //less data less overhead
             if (data.Count() != 0)
             { 
                 ViewBag.TotalRows = data.Select(x => x.totalRows).First();
